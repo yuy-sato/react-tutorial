@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
 import MoveList from './MoveList.js'
 import Board from './Board.js'
 import CalculateWinner from '../lib/CalculateWinner.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { selectSquare } from '../actions/historyActions';
+import { updateStepNumber } from '../actions/stepNumberActions';
+import { updateXIsNext } from '../actions/xIsNextActions';
 
 const Game = () => {
-  const [history, setHistory] = useState([{squares: Array(9).fill(null)}]);
-  const [xIsNext, setXIsNext] = useState(true);
-  const [stepNumber, setStepNumber] = useState(0);
-
+  const dispatch = useDispatch();
+  const history = useSelector(state => state.history);
+  const stepNumber = useSelector(state => state.stepNumber);
+  const xIsNext = useSelector(state => state.xIsNext);
+  
   const current = history[stepNumber];
   const winner = CalculateWinner(current.squares);
-
 
   let status;
   if (winner) {
@@ -26,17 +29,14 @@ const Game = () => {
       return;
     }
 
-    squaresClone[i] = xIsNext ? 'X' : 'O';
-    setHistory([
-      ...historyClone, {squares: squaresClone}
-    ]);
-    setStepNumber(historyClone.length);
-    setXIsNext(!xIsNext);
+    dispatch(selectSquare(xIsNext ? 'X' : 'O', i, stepNumber));
+    dispatch(updateStepNumber(historyClone.length));
+    dispatch(updateXIsNext(!xIsNext));
   }
 
   const jumpTo = (step) => {
-    setStepNumber(step);
-    setXIsNext(step % 2 === 0);
+    dispatch(updateStepNumber(step));
+    dispatch(updateXIsNext(step % 2 === 0));
   }
 
   return (
