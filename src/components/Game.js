@@ -1,25 +1,25 @@
-import MoveList from './MoveList.js'
-import Board from './Board.js'
-import CalculateWinner from '../lib/CalculateWinner.js'
-import { useDispatch, useSelector } from 'react-redux';
-import { selectSquare } from '../actions/historyActions';
-import { updateStepNumber } from '../actions/stepNumberActions';
-import { updateXIsNext } from '../actions/xIsNextActions';
+import MoveList from "./MoveList.js";
+import Board from "./Board.js";
+import calculateWinner from "../lib/calculateWinner.js";
+import { useDispatch, useSelector } from "react-redux";
+import { selectSquare } from "../actions/historyActions";
+import { updateStepNumber } from "../actions/stepNumberActions";
+import { updateXIsNext } from "../actions/xIsNextActions";
 
 const Game = () => {
   const dispatch = useDispatch();
-  const history = useSelector(state => state.history);
-  const stepNumber = useSelector(state => state.stepNumber);
-  const xIsNext = useSelector(state => state.xIsNext);
-  
+  const history = useSelector((state) => state.history);
+  const stepNumber = useSelector((state) => state.stepNumber);
+  const xIsNext = useSelector((state) => state.xIsNext);
+
   const current = history[stepNumber];
-  const winner = CalculateWinner(current.squares);
+  const winner = calculateWinner(current.squares);
 
   let status;
   if (winner) {
     status = `Winner: ${winner}`;
   } else {
-    status = `Next player: ${xIsNext ? 'X' : 'O'}`;
+    status = `Next player: ${xIsNext ? "X" : "O"}`;
   }
 
   const handleClick = (i) => {
@@ -29,15 +29,15 @@ const Game = () => {
       return;
     }
 
-    dispatch(selectSquare(xIsNext ? 'X' : 'O', i, stepNumber));
+    dispatch(selectSquare(xIsNext ? "X" : "O", i, stepNumber));
     dispatch(updateStepNumber(historyClone.length));
     dispatch(updateXIsNext(!xIsNext));
-  }
+  };
 
   const jumpTo = (step) => {
     dispatch(updateStepNumber(step));
     dispatch(updateXIsNext(step % 2 === 0));
-  }
+  };
 
   return (
     <div className="game">
@@ -50,6 +50,6 @@ const Game = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Game;
