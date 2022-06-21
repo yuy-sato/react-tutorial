@@ -1,9 +1,9 @@
-import Square from './Square.js'
+import { Square } from "./Square.js";
 
-const Board = (props) => {
+export const Board = (props) => {
   const renderSquare = (i) => {
     return <Square value={props.squares[i]} onClick={() => props.onClick(i)} />;
-  }
+  };
 
   return (
     <>
@@ -24,6 +24,4 @@ const Board = (props) => {
       </div>
     </>
   );
-}
-
-export default Board;
+};

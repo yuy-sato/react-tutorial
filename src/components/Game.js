@@ -1,12 +1,12 @@
-import MoveList from "./MoveList.js";
-import Board from "./Board.js";
-import calculateWinner from "../lib/calculateWinner.js";
+import { MoveList } from "./MoveList.js";
+import { Board } from "./Board.js";
 import { useDispatch, useSelector } from "react-redux";
 import { selectSquare } from "../actions/historyActions";
 import { updateStepNumber } from "../actions/stepNumberActions";
 import { updateXIsNext } from "../actions/xIsNextActions";
+import { calculateWinner } from "../lib/calculateWinner.js";
 
-const Game = () => {
+export const Game = () => {
   const dispatch = useDispatch();
   const history = useSelector((state) => state.history);
   const stepNumber = useSelector((state) => state.stepNumber);
@@ -51,5 +51,3 @@ const Game = () => {
     </div>
   );
 };
-
-export default Game;
