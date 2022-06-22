@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom/client";
-import { Game } from "./components/Game.js";
+import Game from "./components/Game.js";
 import "./index.css";
 
 import { store } from "./store";

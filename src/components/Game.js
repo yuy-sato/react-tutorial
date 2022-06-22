@@ -1,17 +1,19 @@
 import { MoveList } from "./MoveList.js";
 import { Board } from "./Board.js";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { selectSquare } from "../actions/historyActions";
 import { updateStepNumber } from "../actions/stepNumberActions";
 import { updateXIsNext } from "../actions/xIsNextActions";
 import { calculateWinner } from "../lib/calculateWinner.js";
 
-export const Game = () => {
-  const dispatch = useDispatch();
-  const history = useSelector((state) => state.history);
-  const stepNumber = useSelector((state) => state.stepNumber);
-  const xIsNext = useSelector((state) => state.xIsNext);
-
+const Game = ({
+  history,
+  stepNumber,
+  xIsNext,
+  selectSquare,
+  updateStepNumber,
+  updateXIsNext,
+}) => {
   const current = history[stepNumber];
   const winner = calculateWinner(current.squares);
 
@@ -29,14 +31,14 @@ export const Game = () => {
       return;
     }
 
-    dispatch(selectSquare(xIsNext ? "X" : "O", i, stepNumber));
-    dispatch(updateStepNumber(historyClone.length));
-    dispatch(updateXIsNext(!xIsNext));
+    selectSquare(xIsNext ? "X" : "O", i, stepNumber);
+    updateStepNumber(historyClone.length);
+    updateXIsNext(!xIsNext);
   };
 
   const jumpTo = (step) => {
-    dispatch(updateStepNumber(step));
-    dispatch(updateXIsNext(step % 2 === 0));
+    updateStepNumber(step);
+    updateXIsNext(step % 2 === 0);
   };
 
   return (
@@ -51,3 +53,22 @@ export const Game = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    history: state.history,
+    stepNumber: state.stepNumber,
+    xIsNext: state.xIsNext,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    selectSquare: (player, index, stepNumber) =>
+      dispatch(selectSquare(player, index, stepNumber)),
+    updateStepNumber: (step) => dispatch(updateStepNumber(step)),
+    updateXIsNext: (xIsNext) => dispatch(updateXIsNext(xIsNext)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Game);
