@@ -6,6 +6,9 @@ import { updateStepNumber } from "../actions/stepNumberActions";
 import { updateXIsNext } from "../actions/xIsNextActions";
 import { calculateWinner } from "../lib/calculateWinner.js";
 
+import { withLog } from "../lib/withLog";
+import { Message } from "../components/Message";
+
 const Game = ({
   history,
   stepNumber,
@@ -41,6 +44,8 @@ const Game = ({
     updateXIsNext(step % 2 === 0);
   };
 
+  const Hoge = withLog("Hello")(Message);
+
   return (
     <div className="game">
       <div className="game-board">
@@ -50,6 +55,7 @@ const Game = ({
         <div>{status}</div>
         <MoveList history={history} onClick={jumpTo} />
       </div>
+      <Hoge />
     </div>
   );
 };
