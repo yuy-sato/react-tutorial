@@ -7,4 +7,4 @@ export const selectSquare = (player, index, stepNumber) => {
       stepNumber,
     },
   };
-}
+};

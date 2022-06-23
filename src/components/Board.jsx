@@ -1,4 +1,5 @@
-import { Square } from "./Square.js";
+import React from 'react';
+import { Square } from './Square';
 
 export const Board = (props) => {
   const renderSquare = (i) => {

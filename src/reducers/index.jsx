@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 import { historyReducer } from './history';
 import { stepNumberReducer } from './stepNumber';
 import { xIsNextReducer } from './xIsNext';

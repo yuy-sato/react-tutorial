@@ -8,4 +8,4 @@ export const stepNumberReducer = (state = initialState, action) => {
     default:
       return state;
   }
-}
+};

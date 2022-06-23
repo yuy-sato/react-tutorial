@@ -4,5 +4,5 @@ export const updateXIsNext = (xIsNext) => {
     payload: {
       xIsNext,
     },
-  }
-}
+  };
+};
